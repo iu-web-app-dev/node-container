@@ -1,0 +1,26 @@
+name: W3C HTML Validator
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install HTML Validator
+        run: npm install -g html-validate
+      
+      - name: Validate HTML files
+        run: html-validate www/*.html
