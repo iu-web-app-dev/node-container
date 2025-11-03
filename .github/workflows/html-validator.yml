@@ -1,4 +1,4 @@
-name: W3C HTML Validator
+name: HTML Validator
 
 on:
   push:
