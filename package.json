@@ -1,0 +1,16 @@
+{
+  "name": "node-static-server",
+  "version": "1.0.0",
+  "description": "Static HTML server using Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./www -p 8080 -o",
+    "dev": "http-server ./www -p 8080"
+  },
+  "keywords": ["static", "html", "server"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
