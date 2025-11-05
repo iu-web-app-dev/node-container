@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>git fetch</title>
+    <link rel="stylesheet" href="/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>git fetch</h1>
+        <p>
+            The <code>git fetch</code> command downloads commits, files, and refs from a remote repository
+            into your local repository without merging them into your current branches. It lets you see what
+            others have been working on before you integrate changes.
+        </p>
+
+        <h3>Common usages</h3>
+        <ul>
+            <li>
+                <p>Fetch from the default remote:</p>
+                <p><code>git fetch</code></p>
+            </li>
+            <li>
+                <p>Fetch from a specific remote (e.g., <code>origin</code>):</p>
+                <p><code>git fetch origin</code></p>
+            </li>
+            <li>
+                <p>Fetch and prune deleted remote branches:</p>
+                <p><code>git fetch --prune</code></p>
+            </li>
+            <li>
+                <p>Fetch from all remotes and prune:</p>
+                <p><code>git fetch --all --prune</code></p>
+            </li>
+        </ul>
+
+        <h3>Tips</h3>
+        <ul>
+            <li>After fetching, use <code>git log ..origin/main</code> or <code>git diff ..origin/main</code> to inspect
+                changes.</li>
+            <li>Combine with <code>git merge</code> or <code>git rebase</code> to integrate fetched changes.</li>
+        </ul>
+    </div>
+</body>
+
+</html>
