@@ -1,16 +1,28 @@
-<html>
-<HEAD>
-    <title>git commit</title>
-    <link rel="stylesheet" href="/style.css">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Commit</title>
+</head>
 <body>
-    <div class="container">
-    <h1>git commit</h1>
-    <p>The <code>git commit</code> command is used to save changes to
-         the local repository.</p>
-    <p>Example: <code>git commit -m "Initial commit"</code></p>
-    </div>
-</body>
-</HEAD>
+  <h1>Git Commit</h1>
+  <p>The <code>git commit</code> command saves your staged changes to the local repository.</p>
 
+  <h2>Basic Usage</h2>
+  <pre><code>git commit -m "Your commit message"</code></pre>
+
+  <h2>Common Options</h2>
+  <ul>
+    <li><code>-a</code> — automatically stage tracked files before committing</li>
+    <li><code>--amend</code> — modify the most recent commit</li>
+    <li><code>-m</code> — add a commit message inline</li>
+  </ul>
+
+  <h2>Example</h2>
+  <pre><code>
+  git add index.html
+  git commit -m "Add homepage layout"
+  </code></pre>
+</body>
 </html>
