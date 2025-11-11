@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 i like git, but it is hard
+=======
+i like git
+>>>>>>> 0ba3b54b3da0d0c6e9a910c9f904299f84c213f7
