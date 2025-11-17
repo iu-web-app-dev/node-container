@@ -1,6 +1,17 @@
 body {
     font-family: sans-serif;
+    /* fixed */
+    /*
     max-width: 800px;
+    min-width: 400px;
+    */
+
+    /* fluid */
+    /*
+    width: 100vw;
+    box-sizing: border-box;
+    */
+
     margin: 0 auto;
     padding: 20px;
     background: #4dfbff;
@@ -17,7 +28,6 @@ body {
     background: white;
     padding: 0px 0px;
     width: 100%;
-    /* height: 100%; */
 }
 h1 {
     color: #333;
