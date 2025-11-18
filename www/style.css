@@ -7,8 +7,10 @@ body {
     /* min-width: 400px; */
 
     /* fluid */
+    /*
     width: 100%;
     box-sizing: border-box;
+    */
 
     margin: 0 auto;
     padding: 20px;
@@ -17,44 +19,34 @@ body {
 }
 
 /* fixed layout for small screens */
-/*
 @media (max-width: 800px) {
     body {
-        max-width: 800px;
-        min-width: 400px;
-    }
-    .container.links {
-        grid-column: 1;
-    }
-    .container:not(.links) {
-        grid-column: 2;
+        width: 100%;
+        box-sizing: border-box;
     }
     #contentFrame {
         width: 100%;
     }
 }
-*/
 
-/* Wide screen layout: place link containers left, content containers right */
-/*
 @media (min-width: 800px) {
     body {
+        width: 100%;
         display: grid;
-        grid-template-columns: 340px 1fr; 
+        grid-template-columns: 250px 1fr;
         column-gap: 30px;
         align-items: start;
+        box-sizing: border-box;
     }
-    .container.links {
+    div.links {
         grid-column: 1;
     }
-    .container:not(.links) {
-        grid-column: 2;
-    }
     #contentFrame {
+        grid-column: 2;
         width: 100%;
     }
 }
-*/
+
 
 .container {
     background: white;
