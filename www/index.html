@@ -11,58 +11,62 @@
             border-radius: 5px;
             margin-top: 20px;
         }
+        .content-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            margin: 0px;
+        }
+        .links a {
+            cursor: pointer;
+            color: #0066cc;
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Node.js Static Server</h1>
-        <p>Welcome!</p>
 
-        <div class="info">
-            <h3>Server Information</h3>
-            <p><strong>Port:</strong> 8080</p>
-            <p><strong>Package:</strong> http-server</p>
-            <p><strong>Directory:</strong> ./www</p>
-        </div>
-
-        <h3>Getting Started</h3>
-        <p>To start the server, run:</p>
-        <ul>
-            <li><code>npm start</code> - Starts server and opens browser</li>
-            <li><code>npm run dev</code> - Starts server only</li>
-        </ul>
-
-        <p>Add your HTML, CSS, and JavaScript files to the <code>www</code> directory to serve them.</p>
-    </div>
-
-    <div class="container">
+    <div class="container links">
         <h3>git commands</h3>
         <ul>
-            <li><a href="git-commands/bisect.html">git bisect</a></li>
-            <li><a href="git-commands/branches.html">git branches</a></li>
-            <li><a href="git-commands/commit.html">git commit</a></li>
-            <li><a href="git-commands/diff.html">git diff</a></li>
-            <li><a href="git-commands/fetch.html">git fetch</a></li>
-            <li><a href="git-commands/help.html">git help</a></li>
-            <li><a href="git-commands/git-log.html">git log</a></li>
-            <li><a href="git-commands/merge.html">git merge</a></li>
-            <li><a href="git-commands/mv.html">git mv</a></li>
-            <li><a href="git-commands/push.html">git push</a></li>
-            <li><a href="git-commands/rebase.html">git rebase</a></li>
-            <li><a href="git-commands/reset.html">git reset</a></li>
-            <li><a href="git-commands/rm.html">git rm</a></li>
-            <li><a href="git-commands/stash.html">git stash</a></li>
-            <li><a href="git-commands/status.html">git status</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/bisect.html'); return false;">git bisect</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/branches.html'); return false;">git branches</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/commit.html'); return false;">git commit</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/diff.html'); return false;">git diff</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/fetch.html'); return false;">git fetch</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/help.html'); return false;">git help</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/git-log.html'); return false;">git log</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/merge.html'); return false;">git merge</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/mv.html'); return false;">git mv</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/push.html'); return false;">git push</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/rebase.html'); return false;">git rebase</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/reset.html'); return false;">git reset</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/rm.html'); return false;">git rm</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/stash.html'); return false;">git stash</a></li>
+            <li><a href="#" onclick="loadPage('git-commands/status.html'); return false;">git status</a></li>
         </ul>
     </div>
 
     <div class="container">
+        <iframe title="content display" id="contentFrame" class="content-frame" style="display:none;"></iframe>
+    </div>
+
+    <div class="container links">
         <h3>Food recipes</h3>
         <ul>
-            <li><a href="foods/bratkartoffeln.html">Bratkartoffeln</a></li>
+            <li><a href="#" onclick="loadPage('foods/bratkartoffeln.html'); return false;">Bratkartoffeln</a></li>
         </ul>
     </div>
+
+    <script>
+        function loadPage(url) {
+            const frame = document.getElementById('contentFrame');
+            frame.src = url;
+            frame.style.display = 'block';
+            frame.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 
 </html>

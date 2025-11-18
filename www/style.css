@@ -1,17 +1,71 @@
 body {
     font-family: sans-serif;
+    /* fixed */
+    /*
     max-width: 800px;
+    min-width: 400px;
+    */
+
+    /* fluid */
+    /*
+    width: 100vw;
+    box-sizing: border-box;
+    */
+
     margin: 0 auto;
     padding: 20px;
     background: #4dfbff;
     min-height: 100vh;
 }
+
+/* fixed layout for small screens */
+@media (max-width: 800px) {
+    body {
+        max-width: 800px;
+        min-width: 400px;
+    }
+    .container.links {
+        grid-column: 1;
+    }
+    .container:not(.links) {
+        grid-column: 2;
+    }
+    #contentFrame {
+        width: 100%;
+    }
+}
+
+/* Wide screen layout: place link containers left, content containers right */
+@media (min-width: 800px) {
+    body {
+        display: grid;
+        grid-template-columns: 340px 1fr; 
+        column-gap: 30px;
+        align-items: start;
+    }
+    .container.links {
+        grid-column: 1;
+    }
+    .container:not(.links) {
+        grid-column: 2;
+    }
+    #contentFrame {
+        width: 100%;
+    }
+}
+
+
 .container {
     background: white;
     padding: 1px 20px 10px 20px;
     border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     margin-bottom: 30px;
+}
+.content {
+    background: white;
+    padding: 0px 0px;
+    width: 100%;
 }
 h1 {
     color: #333;
@@ -32,3 +86,4 @@ code {
     border-radius: 3px;
     font-family: monospace;
 }
+
