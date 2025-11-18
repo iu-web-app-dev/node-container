@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Node.js Static Server</title>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -46,17 +47,14 @@
             <li><a href="#" onclick="loadPage('git-commands/stash.html'); return false;">git stash</a></li>
             <li><a href="#" onclick="loadPage('git-commands/status.html'); return false;">git status</a></li>
         </ul>
-    </div>
-
-    <div class="container">
-        <iframe title="content display" id="contentFrame" class="content-frame" style="display:none;"></iframe>
-    </div>
-
-    <div class="container links">
         <h3>Food recipes</h3>
         <ul>
             <li><a href="#" onclick="loadPage('foods/bratkartoffeln.html'); return false;">Bratkartoffeln</a></li>
         </ul>
+    </div>
+
+    <div class="container">
+        <iframe title="content display" id="contentFrame" class="content-frame" src="no-content.html"></iframe>
     </div>
 
     <script>

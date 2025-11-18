@@ -2,15 +2,13 @@ body {
     font-family: sans-serif;
     /* fixed */
     /*
-    max-width: 800px;
-    min-width: 400px;
+    width: 800px;
     */
+    /* min-width: 400px; */
 
     /* fluid */
-    /*
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
-    */
 
     margin: 0 auto;
     padding: 20px;
@@ -19,6 +17,7 @@ body {
 }
 
 /* fixed layout for small screens */
+/*
 @media (max-width: 800px) {
     body {
         max-width: 800px;
@@ -34,8 +33,10 @@ body {
         width: 100%;
     }
 }
+*/
 
 /* Wide screen layout: place link containers left, content containers right */
+/*
 @media (min-width: 800px) {
     body {
         display: grid;
@@ -53,7 +54,7 @@ body {
         width: 100%;
     }
 }
-
+*/
 
 .container {
     background: white;
