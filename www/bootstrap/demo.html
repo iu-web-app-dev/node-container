@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .row > .grey-bg:nth-of-type(odd) {
+            background-color: #dddddd;
+        }
+        .row > .grey-bg:nth-of-type(even) {
+            background-color: #aaaaaa;
+        }
+        .grey-bg {
+            background-color: #c0c0c0;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Welcome to bootstrap!</h1>
+
+    <div class="container"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 g-sm-2 g-md-4">
+        <div class="col"><div class="grey-bg">Column</div></div>
+        <div class="col"><div class="grey-bg">Another column in a row</div></div>
+        <div class="col"><div class="grey-bg">Column</div></div>
+        <div class="col d-none d-sm-block"><div class="grey-bg">Another column in a row</div></div>
+        <div class="col d-none d-md-block"><div class="grey-bg">Column</div></div>
+        <div class="col d-none d-lg-block"><div class="grey-bg">Another column in a row</div></div>
+    </div></div>
+
+    <h1>Bootstrap Cards</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <img class="card-img-top" src="https://www.iu.org/logos/intl-logo.svg">
+                    <div class="card-body">
+                        <h1 class="card-title">The Title</h1>
+                        <div class="card-text">This is a Card!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
