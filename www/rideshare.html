@@ -31,7 +31,7 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Seats</th>
-                                    <th>ID</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,7 +58,18 @@
                                             {{ ride.availableSeats === 0 ? 'Full' : ride.availableSeats }}
                                         </span>
                                     </td>
-                                    <td><small>{{ ride.id }}</small></td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                        <button @click="bookSeat(ride.id)" class="btn btn-sm btn-outline-primary" :disabled="bookingId === ride.id || ride.availableSeats === 0">
+                                            <span v-if="bookingId === ride.id" class="spinner-border spinner-border-sm me-1"></span>
+                                            Book a seat
+                                        </button>
+                                        <button @click="deleteRide(ride.id)" class="btn btn-sm btn-outline-danger" :disabled="deletingId === ride.id">
+                                            <span v-if="deletingId === ride.id" class="spinner-border spinner-border-sm me-1"></span>
+                                            Remove
+                                        </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,12 +83,12 @@
                                 <input type="text" class="form-control" id="contactName" v-model="newRide.contact.name" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="contactEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="contactEmail" v-model="newRide.contact.email" required>
+                                <label for="contactEmail" class="form-label">Email (optional)</label>
+                                <input type="email" class="form-control" id="contactEmail" v-model="newRide.contact.email" placeholder="name@example.com">
                             </div>
                             <div class="col-md-4">
-                                <label for="contactPhone" class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="contactPhone" v-model="newRide.contact.phone" required>
+                                <label for="contactPhone" class="form-label">Phone (optional)</label>
+                                <input type="tel" class="form-control" id="contactPhone" v-model="newRide.contact.phone" placeholder="+1 555 123456">
                             </div>
                         </div>
 
@@ -145,6 +156,8 @@
                     submitting: false,
                     formError: null,
                     formSuccess: null,
+                    deletingId: null,
+                    bookingId: null,
                     newRide: {
                         contact: {
                             name: '',
@@ -218,6 +231,9 @@
                             ...this.newRide,
                             startDateTime: new Date(this.newRide.startDateTime).toISOString()
                         };
+                        // Normalize optional fields: empty string -> null
+                        if (!rideData.contact.email) rideData.contact.email = null;
+                        if (!rideData.contact.phone) rideData.contact.phone = null;
 
                         const response = await fetch(this.apiCreateUrl, {
                             method: 'POST',
@@ -266,6 +282,55 @@
                         this.formError = err.message || 'Error adding ride. Please try again.';
                     } finally {
                         this.submitting = false;
+                    }
+                },
+                async deleteRide(id) {
+                    this.deletingId = id;
+                    try {
+                        const response = await fetch(`http://localhost:8081/v1/ride/${id}`, { method: 'DELETE' });
+                        if (!response.ok) {
+                            throw new Error('Failed to delete ride');
+                        }
+                        // Remove locally without full reload for snappier UX
+                        this.rides = this.rides.filter(r => r.id !== id);
+                        this.statusMessage = 'Ride removed';
+                    } catch (err) {
+                        console.error('Delete error:', err);
+                        this.statusMessage = 'Error removing ride';
+                    } finally {
+                        this.deletingId = null;
+                    }
+                },
+                async bookSeat(id) {
+                    this.bookingId = id;
+                    try {
+                        const ride = this.rides.find(r => r.id === id);
+                        if (!ride) throw new Error('Ride not found');
+                        if (ride.availableSeats === 0) return; // nothing to book
+
+                        const updated = { ...ride, availableSeats: ride.availableSeats - 1 };
+                        // PUT expects the ride data (without id is fine, server overrides). Keep structure.
+                        const body = { 
+                            contact: updated.contact,
+                            startDateTime: updated.startDateTime,
+                            startLocation: updated.startLocation,
+                            destination: updated.destination,
+                            availableSeats: updated.availableSeats
+                        };
+                        const response = await fetch(`http://localhost:8081/v1/ride/${id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(body)
+                        });
+                        if (!response.ok) throw new Error('Failed to book seat');
+                        // Update local state
+                        ride.availableSeats = updated.availableSeats;
+                        this.statusMessage = 'Seat booked';
+                    } catch (err) {
+                        console.error('Book seat error:', err);
+                        this.statusMessage = 'Error booking seat';
+                    } finally {
+                        this.bookingId = null;
                     }
                 }
             },

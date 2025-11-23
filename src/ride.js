@@ -22,10 +22,11 @@ class Ride {
    */
   constructor(rideData) {
     this.id = uuidv4(); // Generate unique ID at creation time
+    const contact = rideData.contact || {}; // allow missing contact object
     this.contact = {
-      name: rideData.contact.name,
-      email: rideData.contact.email,
-      phone: rideData.contact.phone
+      name: contact.name, // still required; validated later
+      email: contact.email ?? null,
+      phone: contact.phone ?? null
     };
     this.startDateTime = rideData.startDateTime;
     this.startLocation = {
@@ -50,11 +51,17 @@ class Ride {
     if (!this.contact.name || typeof this.contact.name !== 'string') {
       errors.push('Contact name is required and must be a string');
     }
-    if (!this.contact.email || !this.isValidEmail(this.contact.email)) {
-      errors.push('Valid contact email is required');
+    // Optional email: validate only if provided (non-null / non-empty)
+    if (this.contact.email !== null && this.contact.email !== undefined && this.contact.email !== '') {
+      if (!this.isValidEmail(this.contact.email)) {
+        errors.push('Contact email must be a valid email address when provided');
+      }
     }
-    if (!this.contact.phone || typeof this.contact.phone !== 'string') {
-      errors.push('Contact phone is required and must be a string');
+    // Optional phone: validate only if provided (non-null / non-empty)
+    if (this.contact.phone !== null && this.contact.phone !== undefined && this.contact.phone !== '') {
+      if (typeof this.contact.phone !== 'string') {
+        errors.push('Contact phone must be a string when provided');
+      }
     }
 
     // Validate start date/time
