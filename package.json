@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "http-server ./www -p 8080 -o",
-    "dev": "http-server ./www -p 8080"
+    "dev": "http-server ./www -p 8080",
+    "api": "node src/server.js"
   },
   "keywords": ["static", "html", "server"],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "express": "^4.18.2"
   }
 }
