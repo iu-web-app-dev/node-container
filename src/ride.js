@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 /**
  * Ride data type for ride share application
  */
@@ -19,6 +21,7 @@ class Ride {
    * @param {number} rideData.availableSeats - Number of available seats
    */
   constructor(rideData) {
+    this.id = uuidv4(); // Generate unique ID at creation time
     this.contact = {
       name: rideData.contact.name,
       email: rideData.contact.email,
@@ -120,6 +123,7 @@ class Ride {
    */
   toJSON() {
     return {
+      id: this.id,
       contact: this.contact,
       startDateTime: this.startDateTime,
       startLocation: this.startLocation,
