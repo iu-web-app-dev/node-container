@@ -12,12 +12,8 @@ class Ride {
    * @param {string} rideData.contact.email - Contact email
    * @param {string} rideData.contact.phone - Contact phone number
    * @param {string} rideData.startDateTime - ISO 8601 date-time string for ride start
-   * @param {Object} rideData.startLocation - Starting location coordinates
-   * @param {number} rideData.startLocation.lat - Latitude of start location
-   * @param {number} rideData.startLocation.lng - Longitude of start location
-   * @param {Object} rideData.destination - Destination coordinates
-   * @param {number} rideData.destination.lat - Latitude of destination
-   * @param {number} rideData.destination.lng - Longitude of destination
+   * @param {string} rideData.startTown - Starting town
+   * @param {string} rideData.destinationTown - Destination town
    * @param {number} rideData.availableSeats - Number of available seats
    */
   constructor(rideData) {
@@ -29,14 +25,8 @@ class Ride {
       phone: contact.phone ?? null
     };
     this.startDateTime = rideData.startDateTime;
-    this.startLocation = {
-      lat: rideData.startLocation.lat,
-      lng: rideData.startLocation.lng
-    };
-    this.destination = {
-      lat: rideData.destination.lat,
-      lng: rideData.destination.lng
-    };
+    this.startTown = rideData.startTown;
+    this.destinationTown = rideData.destinationTown;
     this.availableSeats = rideData.availableSeats;
   }
 
@@ -69,20 +59,12 @@ class Ride {
       errors.push('Valid start date/time is required (ISO 8601 format)');
     }
 
-    // Validate start location coordinates
-    if (!this.isValidLatitude(this.startLocation.lat)) {
-      errors.push('Start location latitude must be between -90 and 90');
+    // Validate towns (simple non-empty string check)
+    if (!this.startTown || typeof this.startTown !== 'string') {
+      errors.push('Start town is required and must be a string');
     }
-    if (!this.isValidLongitude(this.startLocation.lng)) {
-      errors.push('Start location longitude must be between -180 and 180');
-    }
-
-    // Validate destination coordinates
-    if (!this.isValidLatitude(this.destination.lat)) {
-      errors.push('Destination latitude must be between -90 and 90');
-    }
-    if (!this.isValidLongitude(this.destination.lng)) {
-      errors.push('Destination longitude must be between -180 and 180');
+    if (!this.destinationTown || typeof this.destinationTown !== 'string') {
+      errors.push('Destination town is required and must be a string');
     }
 
     // Validate available seats
@@ -106,23 +88,7 @@ class Ride {
     return emailRegex.test(email);
   }
 
-  /**
-   * Validate latitude
-   * @param {number} lat - Latitude to validate
-   * @returns {boolean} True if valid latitude
-   */
-  isValidLatitude(lat) {
-    return typeof lat === 'number' && lat >= -90 && lat <= 90;
-  }
-
-  /**
-   * Validate longitude
-   * @param {number} lng - Longitude to validate
-   * @returns {boolean} True if valid longitude
-   */
-  isValidLongitude(lng) {
-    return typeof lng === 'number' && lng >= -180 && lng <= 180;
-  }
+  // Coordinate validation helpers removed (town-based model)
 
   /**
    * Convert ride to JSON object
@@ -133,8 +99,8 @@ class Ride {
       id: this.id,
       contact: this.contact,
       startDateTime: this.startDateTime,
-      startLocation: this.startLocation,
-      destination: this.destination,
+      startTown: this.startTown,
+      destinationTown: this.destinationTown,
       availableSeats: this.availableSeats
     };
   }

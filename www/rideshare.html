@@ -51,8 +51,8 @@
                                         <small>{{ ride.contact.phone }}</small>
                                     </td>
                                     <td>{{ formatDateTime(ride.startDateTime) }}</td>
-                                    <td>{{ formatCoordinates(ride.startLocation.lat, ride.startLocation.lng) }}</td>
-                                    <td>{{ formatCoordinates(ride.destination.lat, ride.destination.lng) }}</td>
+                                    <td>{{ ride.startTown }}</td>
+                                    <td>{{ ride.destinationTown }}</td>
                                     <td>
                                         <span :class="['badge', getSeatsBadgeClass(ride.availableSeats)]">
                                             {{ ride.availableSeats === 0 ? 'Full' : ride.availableSeats }}
@@ -105,26 +105,12 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">Start Location</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="number" class="form-control" placeholder="Latitude" v-model.number="newRide.startLocation.lat" step="any" min="-90" max="90" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="number" class="form-control" placeholder="Longitude" v-model.number="newRide.startLocation.lng" step="any" min="-180" max="180" required>
-                                    </div>
-                                </div>
+                                <label class="form-label" for="startTown">Start Town</label>
+                                <input type="text" id="startTown" class="form-control" v-model="newRide.startTown" required placeholder="e.g. Berlin">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Destination</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="number" class="form-control" placeholder="Latitude" v-model.number="newRide.destination.lat" step="any" min="-90" max="90" required>
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="number" class="form-control" placeholder="Longitude" v-model.number="newRide.destination.lng" step="any" min="-180" max="180" required>
-                                    </div>
-                                </div>
+                                <label class="form-label" for="destinationTown">Destination Town</label>
+                                <input type="text" id="destinationTown" class="form-control" v-model="newRide.destinationTown" required placeholder="e.g. Hamburg">
                             </div>
                         </div>
 
@@ -165,14 +151,8 @@
                             phone: ''
                         },
                         startDateTime: '',
-                        startLocation: {
-                            lat: null,
-                            lng: null
-                        },
-                        destination: {
-                            lat: null,
-                            lng: null
-                        },
+                        startTown: '',
+                        destinationTown: '',
                         availableSeats: 1
                     }
                 };
@@ -212,9 +192,7 @@
                         minute: '2-digit'
                     });
                 },
-                formatCoordinates(lat, lng) {
-                    return `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-                },
+                // Coordinates helper removed (town-based model)
                 getSeatsBadgeClass(seats) {
                     if (seats === 0) return 'bg-danger';
                     if (seats <= 2) return 'bg-warning';
@@ -259,14 +237,8 @@
                                 phone: ''
                             },
                             startDateTime: '',
-                            startLocation: {
-                                lat: null,
-                                lng: null
-                            },
-                            destination: {
-                                lat: null,
-                                lng: null
-                            },
+                            startTown: '',
+                            destinationTown: '',
                             availableSeats: 1
                         };
 
@@ -313,8 +285,8 @@
                         const body = { 
                             contact: updated.contact,
                             startDateTime: updated.startDateTime,
-                            startLocation: updated.startLocation,
-                            destination: updated.destination,
+                            startTown: updated.startTown,
+                            destinationTown: updated.destinationTown,
                             availableSeats: updated.availableSeats
                         };
                         const response = await fetch(`http://localhost:8081/v1/ride/${id}`, {

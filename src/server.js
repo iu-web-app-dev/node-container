@@ -79,7 +79,7 @@ app.put('/v1/ride/:id', (req, res) => {
   }
   
   try {
-    const ride = new Ride(req.body);
+  const ride = new Ride(req.body);
     const validation = ride.validate();
     
     if (!validation.isValid) {
@@ -92,7 +92,7 @@ app.put('/v1/ride/:id', (req, res) => {
     const rideJSON = ride.toJSON();
     // Keep the original ID
     rideJSON.id = req.params.id;
-    rides[req.params.id] = rideJSON;
+  rides[req.params.id] = rideJSON;
     
     res.json({
       message: 'Ride updated successfully',
