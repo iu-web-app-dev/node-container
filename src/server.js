@@ -1,9 +1,22 @@
 const express = require('express');
+const cors = require('cors');
 const Ride = require('./ride');
 const app = express();
 const PORT = 8081;
 
 // Middleware to parse JSON
+// Enable CORS for frontend served from http://localhost:8080
+app.use(cors({ origin: 'http://localhost:8080' }));
+// Explicit headers (acts as fallback / ensures visibility in curl tests)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 app.use(express.json());
 
 // In-memory storage for rides using a dictionary for fast ID-based access
