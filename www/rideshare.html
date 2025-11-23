@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="contactPhone" class="form-label">Phone (optional)</label>
-                                <input type="tel" class="form-control" id="contactPhone" v-model="newRide.contact.phone" placeholder="+1 555 123456">
+                                <input type="tel" class="form-control" id="contactPhone" v-model="newRide.contact.phone" placeholder="+49 123 456789">
                             </div>
                         </div>
 
@@ -192,7 +192,6 @@
                         minute: '2-digit'
                     });
                 },
-                // Coordinates helper removed (town-based model)
                 getSeatsBadgeClass(seats) {
                     if (seats === 0) return 'bg-danger';
                     if (seats <= 2) return 'bg-warning';
@@ -280,14 +279,13 @@
                         if (!ride) throw new Error('Ride not found');
                         if (ride.availableSeats === 0) return; // nothing to book
 
-                        const updated = { ...ride, availableSeats: ride.availableSeats - 1 };
                         // PUT expects the ride data (without id is fine, server overrides). Keep structure.
                         const body = { 
-                            contact: updated.contact,
-                            startDateTime: updated.startDateTime,
-                            startTown: updated.startTown,
-                            destinationTown: updated.destinationTown,
-                            availableSeats: updated.availableSeats
+                            contact: ride.contact,
+                            startDateTime: ride.startDateTime,
+                            startTown: ride.startTown,
+                            destinationTown: ride.destinationTown,
+                            availableSeats: ride.availableSeats - 1
                         };
                         const response = await fetch(`http://localhost:8081/v1/ride/${id}`, {
                             method: 'PUT',
@@ -296,7 +294,7 @@
                         });
                         if (!response.ok) throw new Error('Failed to book seat');
                         // Update local state
-                        ride.availableSeats = updated.availableSeats;
+                        ride.availableSeats = ride.availableSeats - 1;
                         this.statusMessage = 'Seat booked';
                     } catch (err) {
                         console.error('Book seat error:', err);
