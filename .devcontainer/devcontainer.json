@@ -16,7 +16,7 @@
 
   "postCreateCommand": "npm install",
   
-  "forwardPorts": [8080],
+  "forwardPorts": [8080,8081],
   
   "portsAttributes": {
     "8080": {
