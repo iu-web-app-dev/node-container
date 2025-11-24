@@ -137,8 +137,8 @@
                     loading: false,
                     error: null,
                     statusMessage: '',
-                    apiUrl: 'http://localhost:8081/v1/list',
-                    apiCreateUrl: 'http://localhost:8081/v1/ride',
+                    apiUrl: 'http://localhost:8081/v1/rides',
+                    apiCreateUrl: 'http://localhost:8081/v1/rides',
                     submitting: false,
                     formError: null,
                     formSuccess: null,
@@ -258,7 +258,7 @@
                 async deleteRide(id) {
                     this.deletingId = id;
                     try {
-                        const response = await fetch(`http://localhost:8081/v1/ride/${id}`, { method: 'DELETE' });
+                        const response = await fetch(`http://localhost:8081/v1/rides/${id}`, { method: 'DELETE' });
                         if (!response.ok) {
                             throw new Error('Failed to delete ride');
                         }
@@ -287,7 +287,7 @@
                             destinationTown: ride.destinationTown,
                             availableSeats: ride.availableSeats - 1
                         };
-                        const response = await fetch(`http://localhost:8081/v1/ride/${id}`, {
+                        const response = await fetch(`http://localhost:8081/v1/rides/${id}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(body)

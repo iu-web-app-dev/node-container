@@ -22,13 +22,13 @@ app.use(express.json());
 // In-memory storage for rides using a dictionary for fast ID-based access
 const rides = {};
 
-// v1/list endpoint that returns all rides
-app.get('/v1/list', (req, res) => {
+// v1/rides endpoint that returns all rides
+app.get('/v1/rides', (req, res) => {
   res.json(Object.values(rides));
 });
 
-// v1/ride endpoint to create a new ride
-app.post('/v1/ride', (req, res) => {
+// v1/rides endpoint to create a new ride
+app.post('/v1/rides', (req, res) => {
   try {
     const ride = new Ride(req.body);
     const validation = ride.validate();
@@ -55,8 +55,8 @@ app.post('/v1/ride', (req, res) => {
   }
 });
 
-// v1/ride/:id endpoint to get a specific ride by ID
-app.get('/v1/ride/:id', (req, res) => {
+// v1/rides/:id endpoint to get a specific ride by ID
+app.get('/v1/rides/:id', (req, res) => {
   const ride = rides[req.params.id];
   
   if (!ride) {
@@ -68,8 +68,8 @@ app.get('/v1/ride/:id', (req, res) => {
   res.json(ride);
 });
 
-// v1/ride/:id endpoint to update a ride by ID
-app.put('/v1/ride/:id', (req, res) => {
+// v1/rides/:id endpoint to update a ride by ID
+app.put('/v1/rides/:id', (req, res) => {
   const existingRide = rides[req.params.id];
   
   if (!existingRide) {
@@ -106,8 +106,8 @@ app.put('/v1/ride/:id', (req, res) => {
   }
 });
 
-// v1/ride/:id endpoint to delete a ride by ID
-app.delete('/v1/ride/:id', (req, res) => {
+// v1/rides/:id endpoint to delete a ride by ID
+app.delete('/v1/rides/:id', (req, res) => {
   const ride = rides[req.params.id];
   
   if (!ride) {
@@ -127,5 +127,5 @@ app.delete('/v1/ride/:id', (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`REST API server running on port ${PORT}`);
-  console.log(`Try: http://localhost:${PORT}/v1/list`);
+  console.log(`Try: http://localhost:${PORT}/v1/rides`);
 });
