@@ -20,11 +20,11 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // In-memory storage for rides using a dictionary for fast ID-based access
-const rides = {};
+const rides = new Map();
 
 // v1/rides endpoint that returns all rides
 app.get('/v1/rides', (req, res) => {
-  res.json(Object.values(rides));
+  res.json(Array.from(rides.values()));
 });
 
 // v1/rides endpoint to create a new ride
@@ -41,7 +41,7 @@ app.post('/v1/rides', (req, res) => {
     }
     
     const rideJSON = ride.toJSON();
-    rides[ride.id] = rideJSON; // Store in dictionary using ID as key
+    rides.set(ride.id, rideJSON); // Store in dictionary using ID as key
     
     res.status(201).json({
       message: 'Ride created successfully',
@@ -57,7 +57,7 @@ app.post('/v1/rides', (req, res) => {
 
 // v1/rides/:id endpoint to get a specific ride by ID
 app.get('/v1/rides/:id', (req, res) => {
-  const ride = rides[req.params.id];
+  const ride = rides.get(req.params.id);
   
   if (!ride) {
     return res.status(404).json({
@@ -70,16 +70,14 @@ app.get('/v1/rides/:id', (req, res) => {
 
 // v1/rides/:id endpoint to update a ride by ID
 app.put('/v1/rides/:id', (req, res) => {
-  const existingRide = rides[req.params.id];
-  
-  if (!existingRide) {
+  if (!rides.has(req.params.id)) {
     return res.status(404).json({
       error: 'Ride not found'
     });
   }
   
   try {
-  const ride = new Ride(req.body);
+    const ride = new Ride(req.body);
     const validation = ride.validate();
     
     if (!validation.isValid) {
@@ -92,7 +90,7 @@ app.put('/v1/rides/:id', (req, res) => {
     const rideJSON = ride.toJSON();
     // Keep the original ID
     rideJSON.id = req.params.id;
-  rides[req.params.id] = rideJSON;
+    rides.set(req.params.id, rideJSON);
     
     res.json({
       message: 'Ride updated successfully',
@@ -108,19 +106,17 @@ app.put('/v1/rides/:id', (req, res) => {
 
 // v1/rides/:id endpoint to delete a ride by ID
 app.delete('/v1/rides/:id', (req, res) => {
-  const ride = rides[req.params.id];
   
-  if (!ride) {
+  if (!rides.has(req.params.id)) {
     return res.status(404).json({
       error: 'Ride not found'
     });
   }
   
-  delete rides[req.params.id];
+  rides.delete(req.params.id);
   
   res.json({
-    message: 'Ride deleted successfully',
-    ride: ride
+    message: 'Ride deleted successfully'
   });
 });
 
