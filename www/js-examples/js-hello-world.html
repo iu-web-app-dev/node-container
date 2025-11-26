@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>JavaScript Hello World</title>
+  <script src="src.js"></script>
+</head>
+<body>
+  <button id="greetbtn" onclick="alert('Hi')">greet</button>
+  <button id="nullbtn">nothing</button>
+  <script>
+    //console.log(document.getElementById("greetbtn"));
+    //console.log(document.querySelectorAll("button"));
+
+    function logElement(element) {
+      console.log(element.tagName);
+      for(let i=0; i<element.children.length; i++) {
+        logElement(element.children[i]);
+      }
+    }
+
+    logElement(document.documentElement);
+    //logElement(document.documentElement.firstChild);
+    //logElement(document.documentElement.firstChild.firstChild);
+  </script>
+</body>
+</html>
