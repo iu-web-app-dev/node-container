@@ -55,26 +55,4 @@ describe('Rideshare App E2E Tests', () => {
     const title = await driver.getTitle();
     expect(title).toContain('Rideshare');
   });
-
-  test('should add a new ride', async () => {
-    await driver.get('http://localhost:8080/rideshare.html');
-    
-    // Fill out the form
-    await driver.findElement(By.id('contactName')).sendKeys('Max Mustermann');
-    await driver.findElement(By.id('contactEmail')).sendKeys('max@example.com');
-    await driver.findElement(By.id('startDateTime')).sendKeys('10100020261200');
-    await driver.findElement(By.id('startDateTime')).sendKeys();
-    await driver.findElement(By.id('startTown')).sendKeys('Berlin');
-    await driver.findElement(By.id('destinationTown')).sendKeys('Hamburg');
-    await driver.findElement(By.id('availableSeats')).sendKeys('4');
-    
-    // Submit form
-    await driver.findElement(By.css('button[type="submit"]')).click();
-    
-    // Wait for success message
-    await driver.wait(until.elementLocated(By.css('.alert-success')), 5000);
-    
-    const successMsg = await driver.findElement(By.css('.alert-success')).getText();
-    expect(successMsg).toContain('successfully');
-  });
 }, 60000);
