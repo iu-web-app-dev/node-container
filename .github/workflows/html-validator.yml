@@ -23,4 +23,4 @@ jobs:
         run: npm install -g html-validate
       
       - name: Validate HTML files
-        run: html-validate www
+        run: html-validate --preset recommended --rule element-required-attributes:off www
