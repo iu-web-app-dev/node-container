@@ -1,4 +1,4 @@
-const { Builder, By, until } = require('selenium-webdriver');
+const { Builder, By, until, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { spawn } = require('child_process');
 
@@ -59,7 +59,10 @@ describe('Rideshare App E2E Tests', () => {
     // Fill out the form
     await driver.findElement(By.id('contactName')).sendKeys('Max Mustermann');
     await driver.findElement(By.id('contactEmail')).sendKeys('max@example.com');
-    await driver.findElement(By.id('startDateTime')).sendKeys('2026-05-20T09:00');
+    await driver.findElement(By.id('startDateTime')).sendKeys('10102026')
+      .keyDown(Key.ARROW_RIGHT).keyUp(Key.ARROW_RIGHT)
+      .sendKeys('1200');
+    await driver.findElement(By.id('startDateTime')).sendKeys();
     await driver.findElement(By.id('startTown')).sendKeys('Berlin');
     await driver.findElement(By.id('destinationTown')).sendKeys('Hamburg');
     await driver.findElement(By.id('availableSeats')).sendKeys('4');
