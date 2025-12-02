@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "www": "http-server ./www -p 8080 -o",
-    "api": "node src/server.js",
+    "api": "node src/entry-point.js",
     "all": "concurrently -n api,web -c blue,green \"npm run api\" \"npm run www\"",
     "test": "jest"
   },
@@ -20,10 +20,10 @@
     "concurrently": "^9.2.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "http-server": "^14.1.1",
-    "uuid": "^13.0.0"
+    "http-server": "^14.1.1"
   },
   "devDependencies": {
-    "jest": "^30.2.0"
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
   }
 }

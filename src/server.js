@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const Ride = require('./ride');
 const app = express();
-const PORT = 8081;
 
 // Middleware to parse JSON
 // Enable CORS for frontend served from http://localhost:8080
@@ -120,8 +119,4 @@ app.delete('/v1/rides/:id', (req, res) => {
   });
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`REST API server running on port ${PORT}`);
-  console.log(`Try: http://localhost:${PORT}/v1/rides`);
-});
+module.exports = { app };

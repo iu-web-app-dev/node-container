@@ -26,7 +26,7 @@ jobs:
         run: html-validate --preset recommended --rule element-required-attributes:off www
 
       - name: Install Jest
-        run: npm install --save-dev jest
+        run: npm install --save-dev jest supertest
 
       - name: Run unit tests
         run: npm test
