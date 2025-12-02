@@ -1,5 +1,5 @@
 const { Builder, By, until } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chromium');
+const chrome = require('selenium-webdriver/chrome');
 const { spawn } = require('child_process');
 
 let httpServer;
@@ -22,8 +22,15 @@ beforeAll(async () => {
   // Wait for servers to start
   await new Promise(resolve => setTimeout(resolve, 2000));
 
+  // Setup Chrome driver
+  const options = new chrome.Options();
+  options.addArguments('--headless');
+  options.addArguments('--no-sandbox');
+  options.addArguments('--disable-dev-shm-usage');
+
   driver = await new Builder()
     .forBrowser('chrome')
+    .setChromeOptions(options)
     .build();
 }, 30000);
 
