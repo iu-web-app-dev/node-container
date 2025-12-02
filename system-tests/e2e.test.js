@@ -39,7 +39,10 @@ afterAll(async () => {
   if (driver) {
     await driver.quit();
   }
-  // TODO Stop servers
+
+  // Stop servers
+  if (httpServer) httpServer.kill();
+  if (apiServer) apiServer.kill();
 });
 
 describe('Rideshare App E2E Tests', () => {
