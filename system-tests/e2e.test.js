@@ -22,15 +22,8 @@ beforeAll(async () => {
   // Wait for servers to start
   await new Promise(resolve => setTimeout(resolve, 2000));
 
-  // Setup Chrome driver
-  const options = new chrome.Options();
-  options.addArguments('--headless');
-  options.addArguments('--no-sandbox');
-  options.addArguments('--disable-dev-shm-usage');
-
   driver = await new Builder()
     .forBrowser('chrome')
-    .setChromeOptions(options)
     .build();
 }, 30000);
 
