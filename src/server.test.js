@@ -82,4 +82,109 @@ describe('Ride lifecycle: create, list, book, delete', () => {
   });
 });
 
+describe('Ride validation', () => {
+  test('should reject ride with missing contact name', async () => {
+    const incompleteRide = {
+      contact: {
+        email: 'max@example.com'
+        // name is missing
+      },
+      startDateTime: '2026-05-20T09:00:00Z',
+      startTown: 'Berlin',
+      destinationTown: 'Hamburg',
+      availableSeats: 3
+    };
+
+    const res = await request(srv)
+      .post('/v1/rides')
+      .send(incompleteRide);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toBe('Invalid ride data');
+    expect(res.body.details).toContain('Contact name is required and must be a string');
+  });
+
+  test('should reject ride with invalid email', async () => {
+    const invalidRide = {
+      contact: {
+        name: 'Max Mustermann',
+        email: 'not-an-email'
+      },
+      startDateTime: '2026-05-20T09:00:00Z',
+      startTown: 'Berlin',
+      destinationTown: 'Hamburg',
+      availableSeats: 3
+    };
+
+    const res = await request(srv)
+      .post('/v1/rides')
+      .send(invalidRide);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toBe('Invalid ride data');
+    expect(res.body.details).toContain('Contact email must be a valid email address when provided');
+  });
+
+  test('should reject ride with missing start town', async () => {
+    const incompleteRide = {
+      contact: {
+        name: 'Max Mustermann'
+      },
+      startDateTime: '2026-05-20T09:00:00Z',
+      // startTown is missing
+      destinationTown: 'Hamburg',
+      availableSeats: 3
+    };
+
+    const res = await request(srv)
+      .post('/v1/rides')
+      .send(incompleteRide);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toBe('Invalid ride data');
+    expect(res.body.details).toContain('Start town is required and must be a string');
+  });
+
+  test('should reject ride with invalid available seats', async () => {
+    const invalidRide = {
+      contact: {
+        name: 'Max Mustermann'
+      },
+      startDateTime: '2026-05-20T09:00:00Z',
+      startTown: 'Berlin',
+      destinationTown: 'Hamburg',
+      availableSeats: -1  // Negative seats
+    };
+
+    const res = await request(srv)
+      .post('/v1/rides')
+      .send(invalidRide);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toBe('Invalid ride data');
+    expect(res.body.details).toContain('Available seats must be a non-negative integer');
+  });
+
+  test('should reject ride with invalid date format', async () => {
+    const invalidRide = {
+      contact: {
+        name: 'Max Mustermann'
+      },
+      startDateTime: 'not-a-date',
+      startTown: 'Berlin',
+      destinationTown: 'Hamburg',
+      availableSeats: 2
+    };
+
+    const res = await request(srv)
+      .post('/v1/rides')
+      .send(invalidRide);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toBe('Invalid ride data');
+    expect(res.body.details).toContain('Valid start date/time is required (ISO 8601 format)');
+  });
+
+});
+
 
