@@ -24,3 +24,9 @@ jobs:
       
       - name: Validate HTML files
         run: html-validate --preset recommended --rule element-required-attributes:off www
+
+      - name: Install Jest
+        run: npm install --save-dev jest
+
+      - name: Run unit tests
+        run: npm test

@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 /**
  * Ride data type for ride share application
@@ -17,7 +17,7 @@ class Ride {
    * @param {number} rideData.availableSeats - Number of available seats
    */
   constructor(rideData) {
-    this.id = uuidv4(); // Generate unique ID at creation time
+    this.id = Ride.randID(); // Generate unique ID at creation time
     const contact = rideData.contact || {}; // allow missing contact object
     this.contact = {
       name: contact.name, // still required; validated later
@@ -28,6 +28,14 @@ class Ride {
     this.startTown = rideData.startTown;
     this.destinationTown = rideData.destinationTown;
     this.availableSeats = rideData.availableSeats;
+  }
+
+  /**
+   * Generate a random 64-bit hex string
+   * @returns {string}
+   */
+  static randID() {
+    return crypto.randomBytes(8).toString('hex');
   }
 
   /**
@@ -43,7 +51,7 @@ class Ride {
     }
     // Optional email: validate only if provided (non-null / non-empty)
     if (this.contact.email !== null && this.contact.email !== undefined && this.contact.email !== '') {
-      if (!this.isValidEmail(this.contact.email)) {
+      if (!Ride.isValidEmail(this.contact.email)) {
         errors.push('Contact email must be a valid email address when provided');
       }
     }
@@ -83,7 +91,7 @@ class Ride {
    * @param {string} email - Email address to validate
    * @returns {boolean} True if valid email format
    */
-  isValidEmail(email) {
+  static isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
