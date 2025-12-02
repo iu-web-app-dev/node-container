@@ -1,5 +1,5 @@
 const { Builder, By, until } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
+const chrome = require('selenium-webdriver/chromium');
 const { spawn } = require('child_process');
 
 let httpServer;
@@ -39,14 +39,7 @@ afterAll(async () => {
   if (driver) {
     await driver.quit();
   }
-
-  // Stop servers
-  if (httpServer) {
-    process.kill(-httpServer.pid);
-  }
-  if (apiServer) {
-    process.kill(-apiServer.pid);
-  }
+  // TODO Stop servers
 });
 
 describe('Rideshare App E2E Tests', () => {
