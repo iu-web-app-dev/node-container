@@ -59,9 +59,7 @@ describe('Rideshare App E2E Tests', () => {
     // Fill out the form
     await driver.findElement(By.id('contactName')).sendKeys('Max Mustermann');
     await driver.findElement(By.id('contactEmail')).sendKeys('max@example.com');
-    await driver.findElement(By.id('startDateTime')).sendKeys('10102026')
-      .keyDown(Key.ARROW_RIGHT).keyUp(Key.ARROW_RIGHT)
-      .sendKeys('1200');
+    await driver.findElement(By.id('startDateTime')).sendKeys('10100020261200');
     await driver.findElement(By.id('startDateTime')).sendKeys();
     await driver.findElement(By.id('startTown')).sendKeys('Berlin');
     await driver.findElement(By.id('destinationTown')).sendKeys('Hamburg');
