@@ -29,9 +29,9 @@ beforeAll(async () => {
   options.addArguments('--disable-dev-shm-usage');
 
   driver = await new Builder()
+    .setChromeService(new chrome.ServiceBuilder('chromedriver'))
     .forBrowser('chrome')
     .setChromeOptions(options)
-    .setChromeService(new chrome.ServiceBuilder('chromedriver').build())
     .build();
 }, 30000);
 
