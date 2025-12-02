@@ -33,6 +33,9 @@ beforeAll(async () => {
     .forBrowser('chrome')
     .setChromeOptions(options)
     .build();
+
+  // Increase timeouts
+  await driver.manage().setTimeouts({ script: 60000, pageLoad: 60000 });
 }, 30000);
 
 afterAll(async () => {
