@@ -1,4 +1,4 @@
-name: HTML Validator
+name: Selenium e2e test
 
 on:
   push:
@@ -32,4 +32,4 @@ jobs:
           export PATH=$PATH:/usr/lib/chromium-browser/
 
       - name: Run end-to-end tests
-        run: npm test:e2e
+        run: npm run test:e2e
