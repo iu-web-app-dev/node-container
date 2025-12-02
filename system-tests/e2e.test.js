@@ -23,7 +23,6 @@ beforeAll(async () => {
   await new Promise(resolve => setTimeout(resolve, 2000));
 
   // Setup Chrome driver
-  chrome.setDefaultService(new chrome.ServiceBuilder("chromedriver").build());
   const options = new chrome.Options();
   options.addArguments('--headless');
   options.addArguments('--no-sandbox');
@@ -32,6 +31,7 @@ beforeAll(async () => {
   driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(options)
+    .setChromeService(new chrome.ServiceBuilder('chromedriver').build())
     .build();
 }, 30000);
 
